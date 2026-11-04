@@ -6,54 +6,69 @@
     <title>Drōply — Info & Support</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f0c20 0%, #15102a 50%, #06040a 100%);
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f3f1f6;
-            --text-muted: #a5a1b8;
-            --accent: #9d4edd;
-            --accent-glow: rgba(157, 78, 221, 0.4);
+            --bg-color: #f7f9f8;
+            --wave-light: #d6e5e0;
+            --text-main: #0b453e;
+            --text-muted: #3a6b64;
+            --accent-teal: #086b5e;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(11, 69, 62, 0.06);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
+            background: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
             max-width: 750px;
             margin: 0 auto;
-            padding: 50px 20px;
+            padding: 40px 20px 80px 20px;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Dekorative organische Formen passend zum Icon-Stil */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background-color: var(--wave-light);
+            border-radius: 43% 57% 70% 30% / 45% 45% 55% 55%;
+            z-index: -1;
+            opacity: 0.6;
         }
 
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            margin-top: 20px;
         }
 
-        .logo-placeholder {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #c77dff 0%, #7b2cbf 100%);
-            border-radius: 20px;
-            margin: 0 auto 15px auto;
-            box-shadow: 0 8px 24px var(--accent-glow);
+        .app-icon-preview {
+            width: 90px;
+            height: 90px;
+            background-color: #ffffff;
+            border-radius: 22px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 10px 25px rgba(11, 69, 62, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: #fff;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent-teal);
+            border: 1px solid rgba(11, 69, 62, 0.05);
         }
 
         h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 2.4rem;
+            font-weight: 700;
             margin: 0;
-            background: linear-gradient(135deg, #fff 0%, #c77dff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-main);
             letter-spacing: -0.5px;
         }
 
@@ -61,45 +76,45 @@
             color: var(--text-muted);
             font-size: 1.1rem;
             margin-top: 5px;
+            font-weight: 500;
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin-top: 0;
-            margin-bottom: 15px;
-            color: #fff;
-            border-left: 3px solid var(--accent);
-            padding-left: 12px;
+            margin-bottom: 18px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--wave-light);
+            padding-bottom: 8px;
         }
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            padding: 30px;
             border-radius: 24px;
+            padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 30px var(--card-shadow);
+            border: 1px solid rgba(214, 229, 224, 0.5);
         }
 
         .btn-support {
             display: inline-block;
-            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
-            color: #fff;
-            padding: 12px 28px;
-            border-radius: 14px;
+            background: var(--accent-teal);
+            color: #ffffff;
+            padding: 14px 32px;
+            border-radius: 16px;
             font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 4px 15px var(--accent-glow);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 18px rgba(8, 107, 94, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
             margin-top: 10px;
         }
 
         .btn-support:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.6);
+            background-color: #054d43;
+            box-shadow: 0 8px 22px rgba(8, 107, 94, 0.35);
         }
 
         p, li {
@@ -108,30 +123,24 @@
         }
 
         strong {
-            color: #fff;
-        }
-
-        ul {
-            padding-left: 20px;
-            margin-bottom: 0;
-        }
-
-        li {
-            margin-bottom: 8px;
+            color: var(--text-main);
+            font-weight: 600;
         }
 
         footer {
             text-align: center;
             margin-top: 60px;
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.2);
+            color: var(--text-muted);
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-placeholder">D</div>
+        <!-- Das 'ō' symbolisiert direkt dein starkes Icon-Logo -->
+        <div class="app-icon-preview">ō</div>
         <h1>Drōply</h1>
         <p class="subtitle">Business Companion</p>
     </header>
