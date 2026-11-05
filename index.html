@@ -5,7 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drōply — Digital Companion</title>
     
-    <!-- 🚀 DEEP LINKING & STORE VERIFICATION META TAGS -->
+    <!-- 🚀 DEEP LINKING INTERCEPTOR ENGINE -->
+    <script>
+        (function() {
+            // 1. Parameter aus der Browserzeile auslesen
+            const urlParams = new URLSearchParams(window.location.search);
+            const cat = urlParams.get('cat');
+            const items = urlParams.get('items');
+            const title = urlParams.get('title');
+            
+            // 2. Wenn Rezept-Daten vorhanden sind, leiten wir sofort an die App weiter
+            if (cat && items) {
+                const appScheme = `droply://import-creation?cat=${encodeURIComponent(cat)}&items=${encodeURIComponent(items)}&title=${encodeURIComponent(title || '')}`;
+                
+                // Sofortiger Weiterleitungsversuch in die native Hülle
+                window.location.href = appScheme;
+                
+                // Fallback: Wenn die App nach 2,5 Sekunden nicht reagiert, blende die Seite normal ein
+                setTimeout(function() {
+                    console.log("App wurde nicht geöffnet. Zeige normale Landingpage.");
+                }, 2500);
+            }
+        })();
+    </script>
+    
+    <!-- 🚀 STORE VERIFICATION META TAGS -->
     <meta name="apple-itunes-app" content="app-id=DEINE_APPLE_APP_ID, app-argument=droply://preview">
     <meta name="description" content="Der professionelle Offline-Begleiter für dein dōTERRA Business. Kalkulationen, Proben-Verwaltung und LRP-Planung direkt auf deinem Smartphone.">
 
@@ -243,12 +267,11 @@
             
             <div class="grid-split">
                 <a href="mailto:support@deine-domain.de" class="btn-primary">Support per E-Mail</a>
-                <!-- Platzhalter für den echten Store Link oder dein Custom Scheme zum lokalen Testen -->
                 <a href="droply://preview" class="btn-secondary">In der App öffnen</a>
             </div>
         </div>
 
-        <!-- 🔒 DATENSCHUTZ CARD (Aufgewertet in Abschnitte) -->
+        <!-- 🔒 DATENSCHUTZ CARD -->
         <div class="card">
             <h2>Datenschutzerklärung</h2>
             
@@ -265,20 +288,3 @@
             
             <div class="legal-section">
                 <h3>3. Manuelle Freigabe durch den Nutzer</h3>
-                <p>Ein automatisierter Transfer an uns oder unbefugte Dritte findet zu keinem Zeitpunkt statt. Solltest du geschäftliche Mischungen oder Kundenkarteien teilen wollen, geschieht dies ausnahmslos über die nativen Teilen-Funktionen deines Betriebssystems (AirDrop, ShareSheet) und wird in jedem Schritt manuell von dir autorisiert.</p>
-            </div>
-            
-            <div class="legal-section">
-                <h3>4. In-App-Käufe und Abonnements</h3>
-                <p>Die Abrechnung erweiterter Lizenzen wird über die gesicherten Schnittstellen von Apple (App Store Connect) und Google Play abgewickelt. Es gelten die Datenschutzbestimmungen der jeweiligen Store-Betreiber. Personenbezogene Kundenprofile oder Rezeptur-Inhalte werden dabei niemals übertragen.</p>
-            </div>
-        </div>
-
-        <footer>
-            &copy; 2026 Drōply. Alle Rechte vorbehalten. <br>
-            Unabhängige Software-Anwendung für dōTERRA Produktivität.
-        </footer>
-    </div>
-
-</body>
-</html>
