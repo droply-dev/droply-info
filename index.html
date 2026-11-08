@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drōply Share</title>
-    <!-- Google Fonts für die passende Serif-Ästhetik deines Logos -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
         :root {
@@ -39,7 +38,6 @@
             position: relative;
         }
 
-        /* Hintergrund-Wellen-Vibes passend zu deiner App */
         .wave-bg {
             position: absolute;
             bottom: 0;
@@ -47,12 +45,10 @@
             width: 100%;
             height: 40%;
             background: linear-gradient(180deg, rgba(0, 109, 101, 0.85) 0%, var(--emerald-dark) 100%);
-            clip-path: pleated; /* Simuliert die Kurven deiner App-Splash-Welle */
             clip-path: ellipse(80% 50% at 50% 100%);
             z-index: 1;
         }
 
-        /* Elegante Milchglas-Kapsel */
         .card {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
@@ -65,16 +61,29 @@
             text-align: center;
             box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
             z-index: 10;
-            transform: translateY(0);
             animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--emerald-base), var(--emerald-dark));
+            border-radius: 20px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 109, 101, 0.2);
+            color: white;
+            font-size: 32px;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 46px;
+            font-size: 42px;
             font-weight: 800;
             color: var(--emerald-base);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
@@ -85,7 +94,6 @@
             margin-bottom: 24px;
         }
 
-        /* Pulsierender Ladebalken im NeonGlow-Look deiner App */
         .loader-container {
             width: 100%;
             height: 6px;
@@ -110,7 +118,6 @@
             margin-bottom: 24px;
         }
 
-        /* Manueller Aktions-Button, falls der automatische Redirect hakt */
         .btn-primary {
             display: inline-flex;
             align-items: center;
@@ -128,12 +135,40 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(0, 109, 101, 0.2);
+            margin-bottom: 12px;
         }
 
         .btn-primary:hover {
             background: #00564F;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 109, 101, 0.3);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .store-btn {
+            flex: 1;
+            height: 42px;
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            gap: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .store-btn:hover {
+            background: #1f2937;
         }
 
         .error-title {
@@ -160,6 +195,7 @@
     <div class="wave-bg"></div>
 
     <div class="card" id="content-card">
+        <div class="app-icon">💧</div>
         <div class="logo">Drōply</div>
         <div class="status-text" id="status-label">Verbindung zu Drōply wird hergestellt...</div>
         
@@ -174,6 +210,11 @@
         <a href="#" id="manual-btn" class="btn-primary" style="display: none;">
             In Drōply öffnen
         </a>
+
+        <div class="store-buttons" id="store-area" style="display: none;">
+            <a href="https://apps.apple.com" target="_blank" class="store-btn">App Store</a>
+            <a href="https://google.com" target="_blank" class="store-btn">Google Play</a>
+        </div>
     </div>
 
     <script>
@@ -184,32 +225,27 @@
         const descLabel = document.getElementById('desc-label');
         const loader = document.getElementById('loader');
         const manualBtn = document.getElementById('manual-btn');
-        const card = document.getElementById('content-card');
+        const storeArea = document.getElementById('store-area');
 
         if (textData) {
-            const nativeAppUrl = `droply://share?textData=${textData}`;
+            // 🌟 NATIVE ROUTE KORRIGIERT: Wir leiten exakt auf den physischen Pfad "Startseite" um!
+            const nativeAppUrl = `droply://Startseite?textData=${textData}`;
             
-            // Setze die URL auch direkt auf den manuellen Button als Backup
             manualBtn.href = nativeAppUrl;
 
-            // 🚀 Blitzschnelle automatische native Weiterleitung auslösen
+            // 🚀 Automatischen App-Launch triggern
             window.location.href = nativeAppUrl;
 
-            // Nach 1.5 Sekunden blenden wir den Backup-Button ein (falls der automatische Trigger blockiert wurde)
+            // Nach 2 Sekunden blenden wir die Fallbacks ein
             setTimeout(() => {
-                statusLabel.innerText = "Hinzufügen ausstehend";
+                statusLabel.innerText = "Kreation bereit zum Import";
                 loader.style.display = "none";
+                descLabel.innerText = "Du hast Drōply noch nicht auf diesem Gerät? Lade dir die App jetzt kostenlos herunter, um Rezepte anzusehen und zu speichern.";
                 manualBtn.style.display = "inline-flex";
-            }, 1500);
-
-            // Fallback nach 4 Sekunden: Wenn die App gar nicht reagiert, geht es in den App Store
-            setTimeout(() => {
-                // Sobald du im Store bist, einfach auskommentieren:
-                // window.location.href = "https://apple.com";
-            }, 4000);
+                storeArea.style.display = "flex";
+            }, 2000);
 
         } else {
-            // Wunderschönes Fehler-Styling, falls die URL manipuliert ankommt
             loader.style.display = "none";
             descLabel.style.display = "none";
             statusLabel.innerHTML = "<span class='error-title'>Ungültiger Drōply-Link</span>";
