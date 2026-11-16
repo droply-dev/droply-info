@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drōply – Deine dōTERRA-Kreationen</title>
+    <title>Drōply – Ölmischungen, Rezepte & Kataloge</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://googleapis.com/css2?family=Playfair+Display:wght@800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-start: #F8FAFC;
@@ -18,13 +17,7 @@
             --text-dark: #1E293B;
             --text-muted: #64748B;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
@@ -38,261 +31,152 @@
             overflow-x: hidden;
             position: relative;
         }
-
         .wave-bg {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 40%;
             background: linear-gradient(180deg, rgba(0, 109, 101, 0.85) 0%, var(--emerald-dark) 100%);
-            clip-path: ellipse(80% 50% at 50% 100%);
-            z-index: 1;
-            pointer-events: none;
+            clip-path: ellipse(80% 50% at 50% 100%); z-index: 1; pointer-events: none;
         }
-
+        .lang-switch {
+            position: absolute; top: 20px; right: 20px; z-index: 20;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+            padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(0, 109, 101, 0.15);
+            display: flex; gap: 6px;
+        }
+        .lang-btn {
+            background: none; border: none; cursor: pointer; color: var(--text-muted);
+            font-weight: 700; font-size: 13px; padding: 4px 8px; border-radius: 999px;
+        }
+        .lang-btn.active { color: white; background: var(--emerald-base); }
         .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 30px;
-            padding: 40px;
-            width: 100%;
-            max-width: 480px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
-            z-index: 10;
-            animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 30px; padding: 40px; width: 100%; max-width: 500px;
+            text-align: center; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            z-index: 10; margin-top: 30px; animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         .app-icon {
-            width: 90px;
-            height: 90px;
-            border-radius: 22px;
-            margin: 0 auto 20px auto;
-            display: block;
-            box-shadow: 0 10px 25px rgba(0, 109, 101, 0.18);
-            object-fit: cover;
+            width: 90px; height: 90px; border-radius: 22px; margin: 0 auto 20px auto;
+            display: block; box-shadow: 0 10px 25px rgba(0, 109, 101, 0.18); object-fit: cover;
         }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
-            font-weight: 800;
-            color: var(--emerald-base);
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .status-text {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 16px;
-        }
-
-        .loader-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(0, 109, 101, 0.1);
-            border-radius: 999px;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .loader-bar {
-            height: 100%;
-            width: 40%;
-            background: linear-gradient(90deg, var(--emerald-base), var(--text-neon));
-            border-radius: 999px;
-            animation: loading 1.6s infinite ease-in-out;
-        }
-
-        .description {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .feature-list {
-            text-align: left;
-            background: rgba(0, 109, 101, 0.05);
-            border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 24px;
-            font-size: 14px;
-            color: var(--text-dark);
-        }
-
-        .feature-list li {
-            margin-bottom: 8px;
-            list-style: none;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .feature-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        .feature-list li::before {
-            content: "💧";
-            position: absolute;
-            left: 0;
-            font-size: 12px;
-        }
-
+        .logo { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 800; color: var(--emerald-base); margin-bottom: 8px; }
+        .status-text { font-size: 17px; font-weight: 600; color: var(--text-dark); margin-bottom: 16px; }
+        .loader-container { width: 100%; height: 6px; background: rgba(0, 109, 101, 0.1); border-radius: 999px; overflow: hidden; margin-bottom: 24px; }
+        .loader-bar { height: 100%; width: 40%; background: linear-gradient(90deg, var(--emerald-base), var(--text-neon)); border-radius: 999px; animation: loading 1.6s infinite ease-in-out; }
+        .description { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+        .feature-list { text-align: left; background: rgba(0, 109, 101, 0.05); border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; font-size: 14px; }
+        .feature-list li { margin-bottom: 10px; list-style: none; padding-left: 24px; position: relative; line-height: 1.45; }
+        .feature-list li:last-child { margin-bottom: 0; }
+        .feature-list li::before { content: "💧"; position: absolute; left: 0; font-size: 13px; }
         .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: var(--emerald-base);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 16px;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 109, 101, 0.2);
-            margin-bottom: 12px;
+            display: inline-flex; align-items: center; justify-content: center; background: var(--emerald-base);
+            color: white; border: none; padding: 14px 28px; border-radius: 16px; font-size: 15px;
+            font-weight: 700; text-decoration: none; width: 100%; cursor: pointer; transition: all 0.2s ease;
         }
-
-        .btn-primary:hover {
-            background: #00564F;
-            transform: translateY(-2px);
-        }
-
-        .support-box {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(100, 116, 139, 0.15);
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .support-box a {
-            color: var(--emerald-base);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .footer-links {
-            margin-top: 20px;
-            z-index: 10;
-            display: flex;
-            gap: 20px;
-            font-size: 13px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        @keyframes loading {
-            0% { transform: translateX(-150%); }
-            50% { transform: translateX(150%); }
-            100% { transform: translateX(-150%); }
-        }
-
-        @keyframes floatIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .btn-primary:hover { background: #00564F; transform: translateY(-2px); }
+        .support-box { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(100, 116, 139, 0.15); font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+        .support-box a { color: var(--emerald-base); font-weight: 700; text-decoration: none; }
+        .footer-links { margin-top: 20px; z-index: 10; display: flex; gap: 20px; font-size: 13px; }
+        .footer-links a { color: rgba(255, 255, 255, 0.92); text-decoration: none; font-weight: 600; }
+        .footer-links a:hover { text-decoration: underline; }
+        @keyframes loading { 0% { transform: translateX(-150%); } 50% { transform: translateX(150%); } 100% { transform: translateX(-150%); } }
+        @keyframes floatIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
     <div class="wave-bg"></div>
 
-    <!-- ANSICHT 1: Deeplink-Weiterleitung (wenn ?textData vorhanden ist) -->
+    <div class="lang-switch">
+        <button class="lang-btn active" id="btn-de" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+
     <div class="card" id="deeplink-card" style="display: none;">
         <img src="icon.png" class="app-icon" alt="Drōply Icon" />
         <div class="logo">Drōply</div>
         <div class="status-text" id="status-label">Verbindung zu Drōply wird hergestellt...</div>
-        
-        <div class="loader-container" id="loader">
-            <div class="loader-bar"></div>
-        </div>
-
+        <div class="loader-container" id="loader"><div class="loader-bar"></div></div>
         <div class="description" id="desc-label">
-            Deine dōTERRA-Kreation wird direkt an die App übergeben. Bitte bestätige die Weiterleitung, falls dein Browser danach fragt.
+            Deine Kreation, Bestellung oder dein Katalog wird direkt an die App übergeben. Bitte bestätige die Weiterleitung, falls dein Browser danach fragt.
         </div>
-
-        <a href="#" id="manual-btn" class="btn-primary" style="display: none;">
-            In Drōply öffnen
-        </a>
+        <a href="#" id="manual-btn" class="btn-primary" style="display: none;">In Drōply öffnen</a>
     </div>
 
-    <!-- ANSICHT 2: Offizielle App-Startseite & Support (für App Store & normale Besucher) -->
     <div class="card" id="landing-card" style="display: none;">
         <img src="icon.png" class="app-icon" alt="Drōply Icon" />
         <div class="logo">Drōply</div>
-        <div class="status-text">Deine Rezepte & Ölmischungen an einem Ort</div>
-
-        <p class="description">
-            Mit Drōply erstellst, verwaltest und teilst du deine eigenen dōTERRA-Kreationen ganz einfach mit Freunden und deiner Community.
+        <div class="status-text" data-i18n="subtitle">Dein Begleiter für ätherische Öle, Rezepte & Bestellplanung</div>
+        <p class="description" data-i18n="intro">
+            Drōply ist dein flexibles Werkzeug für den Alltag mit ätherischen Ölen. Erstelle eigene Mischungen, nutze den Tropfen-Rechner offline und importiere Kataloge oder Rezepte direkt aus deiner Community.
         </p>
-
         <ul class="feature-list">
-            <li>Eigene Ölmischungen & Rezepte übersichtlich speichern</li>
-            <li>Kreationen per Direktlink mit einem Klick teilen</li>
-            <li>Schneller Zugriff auf deine Favoriten im Alltag</li>
+            <li data-i18n="feat1"><strong>Offline-Kataloge & Tropfen-Rechner:</strong> Importiere Produktkataloge per Link und berechne Mischungsverhältnisse jederzeit offline.</li>
+            <li data-i18n="feat2"><strong>Kreationen & Bestellungen teilen:</strong> Teile eigene Ölmischungen oder geplante Bestelllisten per Direktlink mit Freunden und deinem Team.</li>
+            <li data-i18n="feat3"><strong>100 % Lokal & Ohne Account:</strong> Deine Daten bleiben privat auf deinem Gerät – ganz ohne Registrierung.</li>
         </ul>
-
         <div class="support-box" id="support">
-            <strong>Hilfe & Support</strong><br>
-            Du hast Fragen zur App oder möchtest ein Problem melden? Schreib uns direkt an:<br>
-            <a href="mailto:DEINE-EMAIL@BEISPIEL.DE">DEINE-EMAIL@BEISPIEL.DE</a>
+            <strong data-i18n="supportTitle">Hilfe & Support</strong><br>
+            <span data-i18n="supportText">Du hast Fragen zur App, zu Drōply Pro oder möchtest Feedback geben? Schreib uns jederzeit an:</span><br>
+            <a href="mailto:feedback.droply@gmail.com">feedback.droply@gmail.com</a>
         </div>
     </div>
 
     <div class="footer-links">
-        <a href="index.html">Startseite</a>
-        <a href="privacy.html">Datenschutz</a>
-        <a href="impressum.html">Impressum</a>
+        <a href="index.html" data-i18n="navHome">Startseite</a>
+        <a href="privacy.html" data-i18n="navPrivacy">Datenschutz</a>
+        <a href="impressum.html" data-i18n="navImprint">Impressum</a>
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const textData = urlParams.get('textData');
+        const translations = {
+            de: {
+                subtitle: "Dein Begleiter für ätherische Öle, Rezepte & Bestellplanung",
+                intro: "Drōply ist dein flexibles Werkzeug für den Alltag mit ätherischen Ölen. Erstelle eigene Mischungen, nutze den Tropfen-Rechner offline und importiere Kataloge oder Rezepte direkt aus deiner Community.",
+                feat1: "<strong>Offline-Kataloge & Tropfen-Rechner:</strong> Importiere Produktkataloge per Link und berechne Mischungsverhältnisse jederzeit offline.",
+                feat2: "<strong>Kreationen & Bestellungen teilen:</strong> Teile eigene Ölmischungen oder geplante Bestelllisten per Direktlink mit Freunden und deinem Team.",
+                feat3: "<strong>100 % Lokal & Ohne Account:</strong> Deine Daten bleiben privat auf deinem Gerät – ganz ohne Registrierung.",
+                supportTitle: "Hilfe & Support",
+                supportText: "Du hast Fragen zur App, zu Drōply Pro oder möchtest Feedback geben? Schreib uns jederzeit an:",
+                navHome: "Startseite", navPrivacy: "Datenschutz", navImprint: "Impressum"
+            },
+            en: {
+                subtitle: "Your Companion for Essential Oils, Blends & Order Planning",
+                intro: "Drōply is your flexible tool for working with essential oils. Create custom blends, use the offline drop calculator, and import catalogs or recipes directly from your community.",
+                feat1: "<strong>Offline Catalogs & Drop Calculator:</strong> Import product catalogs via link and calculate dilution ratios offline anytime.",
+                feat2: "<strong>Share Blends & Planned Orders:</strong> Share your custom oil recipes or planned order lists via direct link with friends and your team.",
+                feat3: "<strong>100% Local & No Account Needed:</strong> Your data stays private on your device – no sign-up required.",
+                supportTitle: "Help & Support",
+supportText: "Have questions about the app, Drōply Pro, or want to share feedback? Contact us anytime at:",
+navHome: "Home", navPrivacy: "Privacy Policy", navImprint: "Legal Notice"
+}
+};
+function setLang(lang) {
+document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (translations[lang][key]) el.innerHTML = translations[lang][key];
+});
+}
+const urlParams = new URLSearchParams(window.location.search);
+const textData = urlParams.get('textData');
+const deeplinkCard = document.getElementById('deeplink-card');
+const landingCard = document.getElementById('landing-card');
+if (textData) {
+deeplinkCard.style.display = "block";
+const statusLabel = document.getElementById('status-label');
+const descLabel = document.getElementById('desc-label');
+const loader = document.getElementById('loader');
+const manualBtn = document.getElementById('manual-btn');
+const nativeAppUrl = droply://Startseite?textData=${textData};
+manualBtn.href = nativeAppUrl;
+window.location.href = nativeAppUrl;
+setTimeout(() => {
+statusLabel.innerText = "Bereit zum Import in Drōply";
+loader.style.display = "none";
+descLabel.innerText = "Sollte die automatische Weiterleitung blockiert worden sein, tippe bitte auf den Button unten.";
+manualBtn.style.display = "inline-flex";
+}, 2000);
+} else {
+landingCard.style.display = "block";
+}
 
-        const deeplinkCard = document.getElementById('deeplink-card');
-        const landingCard = document.getElementById('landing-card');
-
-        if (textData) {
-            deeplinkCard.style.display = "block";
-            const statusLabel = document.getElementById('status-label');
-            const descLabel = document.getElementById('desc-label');
-            const loader = document.getElementById('loader');
-            const manualBtn = document.getElementById('manual-btn');
-
-            const nativeAppUrl = `droply://Startseite?textData=${textData}`;
-            manualBtn.href = nativeAppUrl;
-
-            window.location.href = nativeAppUrl;
-
-            setTimeout(() => {
-                statusLabel.innerText = "Kreation bereit zum Import";
-                loader.style.display = "none";
-                descLabel.innerText = "Sollte die Weiterleitung blockiert worden sein, kannst du das Rezept über den Button manuell öffnen.";
-                manualBtn.style.display = "inline-flex";
-            }, 2000);
-        } else {
-            landingCard.style.display = "block";
-        }
-    </script>
-</body>
-</html>
