@@ -125,7 +125,6 @@
         <a href="privacy.html" data-i18n="navPrivacy">Datenschutz</a>
         <a href="impressum.html" data-i18n="navImprint">Impressum</a>
     </div>
-
     <script>
         const translations = {
             de: {
@@ -136,7 +135,9 @@
                 feat3: "<strong>100 % Lokal & Ohne Account:</strong> Deine Daten bleiben privat auf deinem Gerät – ganz ohne Registrierung.",
                 supportTitle: "Hilfe & Support",
                 supportText: "Du hast Fragen zur App, zu Drōply Pro oder möchtest Feedback geben? Schreib uns jederzeit an:",
-                navHome: "Startseite", navPrivacy: "Datenschutz", navImprint: "Impressum"
+                navHome: "Startseite",
+                navPrivacy: "Datenschutz",
+                navImprint: "Impressum"
             },
             en: {
                 subtitle: "Your Companion for Essential Oils, Blends & Order Planning",
@@ -145,38 +146,48 @@
                 feat2: "<strong>Share Blends & Planned Orders:</strong> Share your custom oil recipes or planned order lists via direct link with friends and your team.",
                 feat3: "<strong>100% Local & No Account Needed:</strong> Your data stays private on your device – no sign-up required.",
                 supportTitle: "Help & Support",
-supportText: "Have questions about the app, Drōply Pro, or want to share feedback? Contact us anytime at:",
-navHome: "Home", navPrivacy: "Privacy Policy", navImprint: "Legal Notice"
-}
-};
-function setLang(lang) {
-document.getElementById('btn-de').classList.toggle('active', lang === 'de');
-document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-document.querySelectorAll('[data-i18n]').forEach(el => {
-const key = el.getAttribute('data-i18n');
-if (translations[lang][key]) el.innerHTML = translations[lang][key];
-});
-}
-const urlParams = new URLSearchParams(window.location.search);
-const textData = urlParams.get('textData');
-const deeplinkCard = document.getElementById('deeplink-card');
-const landingCard = document.getElementById('landing-card');
-if (textData) {
-deeplinkCard.style.display = "block";
-const statusLabel = document.getElementById('status-label');
-const descLabel = document.getElementById('desc-label');
-const loader = document.getElementById('loader');
-const manualBtn = document.getElementById('manual-btn');
-const nativeAppUrl = droply://Startseite?textData=${textData};
-manualBtn.href = nativeAppUrl;
-window.location.href = nativeAppUrl;
-setTimeout(() => {
-statusLabel.innerText = "Bereit zum Import in Drōply";
-loader.style.display = "none";
-descLabel.innerText = "Sollte die automatische Weiterleitung blockiert worden sein, tippe bitte auf den Button unten.";
-manualBtn.style.display = "inline-flex";
-}, 2000);
-} else {
-landingCard.style.display = "block";
-}
+                supportText: "Have questions about the app, Drōply Pro, or want to share feedback? Contact us anytime at:",
+                navHome: "Home",
+                navPrivacy: "Privacy Policy",
+                navImprint: "Legal Notice"
+            }
+        };
+
+        function setLang(lang) {
+            document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const textData = urlParams.get('textData');
+        const deeplinkCard = document.getElementById('deeplink-card');
+        const landingCard = document.getElementById('landing-card');
+
+        if (textData) {
+            deeplinkCard.style.display = "block";
+            const statusLabel = document.getElementById('status-label');
+            const descLabel = document.getElementById('desc-label');
+            const loader = document.getElementById('loader');
+            const manualBtn = document.getElementById('manual-btn');
+            const nativeAppUrl = `droply://Startseite?textData=${textData}`;
+            manualBtn.href = nativeAppUrl;
+            window.location.href = nativeAppUrl;
+
+            setTimeout(() => {
+                statusLabel.innerText = "Bereit zum Import in Drōply";
+                loader.style.display = "none";
+                descLabel.innerText = "Sollte die automatische Weiterleitung blockiert worden sein, tippe bitte auf den Button unten.";
+                manualBtn.style.display = "inline-flex";
+            }, 2000);
+        } else {
+            landingCard.style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
 
