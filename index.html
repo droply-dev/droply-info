@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drōply – Ölmischungen, Rezepte & Kataloge</title>
+        <!-- Rich Preview für WhatsApp, iMessage & Social Media -->
+    <meta property="og:title" content="Drōply – Ölmischung, Bestellung oder Katalog öffnen" />
+    <meta property="og:description" content="Tippe auf den Link, um den geteilten Inhalt direkt in deiner Drōply App anzusehen." />
+    <meta property="og:image" content="https://github.io" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Playfair+Display:wght@800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -162,9 +169,15 @@
             });
         }
 
-             const urlParams = new URLSearchParams(window.location.search);
-        const textData = urlParams.get('textData');
-        const catalogUrl = urlParams.get('catalogUrl');
+                  const urlParams = new URLSearchParams(window.location.search);
+        const textData = urlParams.get('d') || urlParams.get('textData');
+        const rawCatalog = urlParams.get('c') || urlParams.get('catalogUrl');
+
+        const OFFICIAL_CATALOG_BASE = "https://githubusercontent.com";
+        const catalogUrl = rawCatalog
+            ? (rawCatalog.startsWith('http') ? rawCatalog : OFFICIAL_CATALOG_BASE + rawCatalog)
+            : null;
+
         const deeplinkCard = document.getElementById('deeplink-card');
         const landingCard = document.getElementById('landing-card');
 
@@ -176,8 +189,8 @@
             const manualBtn = document.getElementById('manual-btn');
 
             const nativeAppUrl = textData
-                ? `droply://Startseite?textData=${encodeURIComponent(textData)}`
-                : `droply://Startseite?catalogUrl=${encodeURIComponent(catalogUrl)}`;
+                ? `droply://Startseite?d=${encodeURIComponent(textData)}`
+                : `droply://Startseite?c=${encodeURIComponent(catalogUrl)}`;
 
             manualBtn.href = nativeAppUrl;
             window.location.href = nativeAppUrl;
@@ -191,9 +204,8 @@
         } else {
             landingCard.style.display = "block";
         }
-
-
     </script>
+
 </body>
 </html>
 
