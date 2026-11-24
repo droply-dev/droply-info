@@ -162,20 +162,36 @@
             });
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
+             const urlParams = new URLSearchParams(window.location.search);
         const textData = urlParams.get('textData');
+        const catalogUrl = urlParams.get('catalogUrl');
         const deeplinkCard = document.getElementById('deeplink-card');
         const landingCard = document.getElementById('landing-card');
 
-        if (textData) {
+        if (textData || catalogUrl) {
             deeplinkCard.style.display = "block";
             const statusLabel = document.getElementById('status-label');
             const descLabel = document.getElementById('desc-label');
             const loader = document.getElementById('loader');
             const manualBtn = document.getElementById('manual-btn');
-            const nativeAppUrl = `droply://Startseite?textData=${textData}`;
+
+            const nativeAppUrl = textData
+                ? `droply://Startseite?textData=${encodeURIComponent(textData)}`
+                : `droply://Startseite?catalogUrl=${encodeURIComponent(catalogUrl)}`;
+
             manualBtn.href = nativeAppUrl;
             window.location.href = nativeAppUrl;
+
+            setTimeout(() => {
+                statusLabel.innerText = "Bereit zum Import in Drōply";
+                loader.style.display = "none";
+                descLabel.innerText = "Sollte die automatische Weiterleitung blockiert worden sein, tippe bitte auf den Button unten.";
+                manualBtn.style.display = "inline-flex";
+            }, 2000);
+        } else {
+            landingCard.style.display = "block";
+        }
+
 
             setTimeout(() => {
                 statusLabel.innerText = "Bereit zum Import in Drōply";
